@@ -78,6 +78,7 @@ npm run pricewatch -- check         # fetch all pages now
 npm run pricewatch -- check 2 --json
 npm run watch                       # check every WATCH_INTERVAL_MINUTES
 npm run serve                       # dashboard at http://localhost:8790
+npm run pricewatch -- alert-test    # sample alert to your Discord webhook
 ```
 
 Set `DISCORD_WEBHOOK_URL` in `.env` to get alerts. Everything else has defaults, see `.env.example`.

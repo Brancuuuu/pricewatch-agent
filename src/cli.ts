@@ -2,7 +2,7 @@ import { Command } from 'commander'
 import { config } from './config.js'
 import { Store } from './db.js'
 import { closeBrowser } from './fetch.js'
-import { formatPrice, stockLabel } from './notify.js'
+import { formatPrice, notifyDiscord, stockLabel } from './notify.js'
 import { checkAll, checkProduct, watchLoop, type CheckResult } from './watch.js'
 import { startServer } from './server.js'
 
@@ -100,6 +100,25 @@ program
     await closeBrowser()
     if (options.json) console.log(JSON.stringify(results, null, 2))
     else results.forEach(printResult)
+    store.close()
+  })
+
+program
+  .command('alert-test')
+  .description('send a sample price-change alert to the Discord webhook')
+  .action(async () => {
+    const store = openStore()
+    const product = store.listProducts().find((p) => store.lastSnapshot(p.id))
+    const current = product ? store.lastSnapshot(product.id) : undefined
+    if (!product || !current || current.price === null) {
+      console.error('add and check at least one product first')
+      process.exitCode = 1
+      store.close()
+      return
+    }
+    const previous = { ...current, price: Math.round(current.price * 1.1 * 100) / 100, in_stock: true }
+    const sent = await notifyDiscord({ product: { ...product, name: '[test] ' + (product.name || product.url) }, previous, current })
+    console.log(sent ? 'alert sent, check the channel' : 'DISCORD_WEBHOOK_URL is not set in .env')
     store.close()
   })
 
