@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 96" width="420" height="96">
+  <rect x="8" y="8" width="80" height="80" rx="20" fill="#1f3355" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+  <circle cx="48" cy="48" r="25" fill="none" stroke="#f0620d" stroke-width="4"/>
+  <polyline points="28,52 37,52 42,37 50,64 55,47 59,52 68,52" fill="none" stroke="#ffffff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="106" y="63" font-family="Segoe UI, Inter, Helvetica, Arial, sans-serif" font-size="46" font-weight="800" letter-spacing="-1.5" fill="#ffffff">price<tspan fill="#f0620d">watch</tspan></text>
+</svg>

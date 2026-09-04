@@ -1,4 +1,9 @@
-<p align="center"><img src="docs/logo.svg" width="360" alt="pricewatch"></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/logo-dark.svg">
+    <img src="docs/logo.svg" width="360" alt="pricewatch">
+  </picture>
+</p>
 
 [![CI](https://github.com/Brancuuuu/pricewatch-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Brancuuuu/pricewatch-agent/actions/workflows/ci.yml)
 [![Release](https://github.com/Brancuuuu/pricewatch-agent/actions/workflows/release.yml/badge.svg)](https://github.com/Brancuuuu/pricewatch-agent/releases)
