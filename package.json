@@ -1,6 +1,6 @@
 {
   "name": "pricewatch-agent",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "AI-powered price watcher: scrapes any shop page, extracts price and stock with Claude, alerts on change",
   "scripts": {
     "test": "vitest run",

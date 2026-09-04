@@ -108,7 +108,7 @@ docker compose up -d
 Every `v*` tag builds a [GitHub Release](https://github.com/Brancuuuu/pricewatch-agent/releases) with generated notes and the npm tarball attached, and pushes the Docker image to `ghcr.io/brancuuuu/pricewatch-agent` tagged with the version, `major.minor` and `latest`. The tarball installs a global `pricewatch` command:
 
 ```bash
-npm install -g ./pricewatch-agent-0.1.1.tgz
+npm install -g ./pricewatch-agent-0.1.2.tgz
 pricewatch list
 ```
 
