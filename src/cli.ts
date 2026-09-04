@@ -7,7 +7,7 @@ import { checkAll, checkProduct, watchLoop, type CheckResult } from './watch.js'
 import { startServer } from './server.js'
 
 const program = new Command()
-program.name('pricewatch').description('Watches product pages and alerts when the price changes').version('0.1.0')
+program.name('pricewatch').description('Watches product pages and alerts when the price changes').version('0.1.1')
 
 function openStore(): Store {
   return new Store(config.dbPath)

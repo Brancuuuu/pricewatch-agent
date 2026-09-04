@@ -41,7 +41,7 @@ export async function notifyDiscord(change: PriceChange, webhookUrl = config.dis
         title: change.product.name || 'Product',
         url: change.product.url,
         description: describeChange(change),
-        color: dropped ? 0x0fa99a : 0xcd2543,
+        color: dropped ? 0x1a7f4b : 0xb42318,
         fields: [
           { name: 'Before', value: formatPrice(change.previous.price, change.previous.currency), inline: true },
           { name: 'Now', value: formatPrice(change.current.price, change.current.currency), inline: true },

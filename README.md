@@ -1,4 +1,4 @@
-# pricewatch-agent
+<p align="center"><img src="docs/logo.svg" width="360" alt="pricewatch"></p>
 
 [![CI](https://github.com/Brancuuuu/pricewatch-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Brancuuuu/pricewatch-agent/actions/workflows/ci.yml)
 [![Release](https://github.com/Brancuuuu/pricewatch-agent/actions/workflows/release.yml/badge.svg)](https://github.com/Brancuuuu/pricewatch-agent/releases)
@@ -103,7 +103,7 @@ docker compose up -d
 Every `v*` tag builds a [GitHub Release](https://github.com/Brancuuuu/pricewatch-agent/releases) with generated notes and the npm tarball attached, and pushes the Docker image to `ghcr.io/brancuuuu/pricewatch-agent` tagged with the version, `major.minor` and `latest`. The tarball installs a global `pricewatch` command:
 
 ```bash
-npm install -g ./pricewatch-agent-0.1.0.tgz
+npm install -g ./pricewatch-agent-0.1.1.tgz
 pricewatch list
 ```
 
@@ -156,6 +156,6 @@ Unit tests (`npm test`) cover the text pipeline, the store, the stats and the ch
 
 Monitor cen, który nie potrzebuje parsera pod każdy sklep. Playwright otwiera stronę produktu, Claude wyciąga z widocznego tekstu cenę, walutę i dostępność jako JSON o wymuszonym schemacie, SQLite trzyma historię, a przy zmianie ceny leci powiadomienie na Discorda. Do tego dashboard ze statystykami, strona produktu z wykresem, API, obraz Dockera na GHCR i zestaw evals, który mierzy trafność po każdej zmianie promptu albo modelu. Uruchomienie: `npm install`, `npx playwright install chromium`, klucz API w `.env`, `npm run pricewatch -- add <adres>`.
 
-## License
+## Credits and license
 
-MIT, Rafał Branc ([ravdev.pl](https://ravdev.pl)).
+Made by Rafał Branc ([ravdev.pl](https://ravdev.pl)). Logo and interface design are original to this project. MIT license, see [LICENSE](LICENSE).
