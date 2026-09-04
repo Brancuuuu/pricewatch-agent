@@ -1,0 +1,21 @@
+services:
+  dashboard:
+    build: .
+    env_file: .env
+    environment:
+      PRICEWATCH_DB: /app/data/pricewatch.db
+    ports:
+      - "8790:8790"
+    volumes:
+      - ./data:/app/data
+    command: ["npx", "tsx", "src/cli.ts", "serve"]
+
+  watcher:
+    build: .
+    env_file: .env
+    environment:
+      PRICEWATCH_DB: /app/data/pricewatch.db
+    volumes:
+      - ./data:/app/data
+    command: ["npx", "tsx", "src/cli.ts", "watch"]
+    restart: unless-stopped

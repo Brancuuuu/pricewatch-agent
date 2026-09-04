@@ -1,0 +1,38 @@
+{
+  "name": "pricewatch-agent",
+  "version": "0.1.0",
+  "description": "AI-powered price watcher: scrapes any shop page, extracts price and stock with Claude, alerts on change",
+  "scripts": {
+    "test": "vitest run",
+    "pricewatch": "tsx src/cli.ts",
+    "serve": "tsx src/cli.ts serve",
+    "watch": "tsx src/cli.ts watch",
+    "typecheck": "tsc --noEmit",
+    "evals": "tsx evals/run.ts",
+    "evals:capture": "tsx evals/capture.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.123.0",
+    "@hono/node-server": "^2.1.1",
+    "better-sqlite3": "^13.0.3",
+    "commander": "^15.0.0",
+    "dotenv": "^17.4.2",
+    "hono": "^4.13.5",
+    "playwright": "^1.62.1",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/node": "^26.4.1",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
