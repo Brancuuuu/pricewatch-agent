@@ -1,0 +1,29 @@
+name: Feature request
+description: An idea for pricewatch
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to do that is hard or impossible today
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: How you imagine it working. Rough is fine.
+    validations:
+      required: true
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Where it belongs
+      options:
+        - label: CLI
+        - label: Dashboard or product page
+        - label: JSON API
+        - label: Notifications
+        - label: Extraction and evals
+        - label: Docker and deployment

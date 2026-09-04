@@ -1,0 +1,42 @@
+name: Bug report
+description: Something does not work the way the README says it should
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What did you do, what did you expect, what did you get instead
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Product URL
+      description: If the problem is a wrong price or stock reading, the page it happened on
+      placeholder: https://shop.example/product
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: The CLI output, the JSON from the API, or the browser console. Remove your API key if it appears anywhere.
+      render: text
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Release tag, commit, or Docker image tag
+      placeholder: v0.1.1
+    validations:
+      required: true
+  - type: dropdown
+    id: how
+    attributes:
+      label: How do you run it
+      options:
+        - npm on Windows
+        - npm on macOS
+        - npm on Linux
+        - Docker
+    validations:
+      required: true
