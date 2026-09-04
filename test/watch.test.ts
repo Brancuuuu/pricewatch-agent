@@ -12,6 +12,7 @@ const snapshot = (price: number | null, in_stock: boolean | null = true) => ({
   model: 'test',
   input_tokens: 10,
   output_tokens: 5,
+  cached_tokens: 0,
 })
 
 describe('Store', () => {
@@ -24,7 +25,7 @@ describe('Store', () => {
     const history = store.history(product.id)
     expect(history.map((s) => s.price)).toEqual([100, 90])
     expect(store.lastSnapshot(product.id)?.in_stock).toBe(false)
-    expect(store.totals()).toMatchObject({ products: 1, snapshots: 2, input_tokens: 20 })
+    expect(store.stats()).toMatchObject({ products: 1, shops: 1, checks: 2, price_changes: 1, in_stock: 0, out_of_stock: 1, input_tokens: 20 })
     expect(store.removeProduct(product.id)).toBe(true)
     expect(store.listProducts()).toHaveLength(0)
     store.close()

@@ -12,7 +12,11 @@ export const DASHBOARD_HTML = `<!doctype html>
   header { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
   h1 { margin: 0; font-size: 22px; letter-spacing: .18em; text-transform: uppercase; }
   h1 b { color: var(--crimson); }
-  .totals { color: var(--mute); font-size: 13px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 22px; }
+  .stat { background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .stat b { display: block; font-size: 20px; font-weight: 800; letter-spacing: -.02em; white-space: nowrap; }
+  .stat span { color: var(--mute); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+  .stat small { color: var(--mute); font-size: 12px; font-weight: 500; }
   form { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
   input { flex: 1; min-width: 260px; background: var(--ink3); border: 1px solid var(--line); color: var(--chalk); padding: 12px 14px; border-radius: 8px; font: inherit; }
   button { background: var(--crimson); color: #fff; border: 0; padding: 12px 18px; border-radius: 8px; font: inherit; font-weight: 700; cursor: pointer; transition: background 300ms cubic-bezier(.4,.05,.2,1); }
@@ -24,6 +28,8 @@ export const DASHBOARD_HTML = `<!doctype html>
   .card h2 { margin: 0 0 4px; font-size: 16px; font-weight: 600; }
   .card a { color: var(--mute); font-size: 12px; text-decoration: none; word-break: break-all; }
   .card a:hover { color: var(--teal); }
+  .card a.name { color: var(--chalk); font-size: inherit; }
+  .card a.name:hover { color: var(--teal); }
   .price { font-size: 24px; font-weight: 800; letter-spacing: -.02em; text-align: right; }
   .meta { color: var(--mute); font-size: 12px; text-align: right; }
   .meta .up { color: var(--crimson); } .meta .down { color: var(--teal); }
@@ -38,8 +44,8 @@ export const DASHBOARD_HTML = `<!doctype html>
 <main>
   <header>
     <h1><b>price</b>watch</h1>
-    <div class="totals" id="totals"></div>
   </header>
+  <div class="stats" id="stats"></div>
   <form id="add">
     <input name="url" type="url" placeholder="https://shop.example/product-page" required>
     <button type="submit">Watch</button>
@@ -50,7 +56,7 @@ export const DASHBOARD_HTML = `<!doctype html>
 <script>
   const list = document.getElementById('list')
   const status = document.getElementById('status')
-  const totals = document.getElementById('totals')
+  const stats = document.getElementById('stats')
   const money = (p, c) => p === null || p === undefined ? 'no price' : p.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + (c ? ' ' + c : '')
   const stock = (s) => s === null || s === undefined ? 'stock unknown' : (s ? 'in stock' : 'out of stock')
 
@@ -69,7 +75,18 @@ export const DASHBOARD_HTML = `<!doctype html>
   async function load() {
     const res = await fetch('/api/products')
     const data = await res.json()
-    totals.textContent = data.totals.products + ' products, ' + data.totals.snapshots + ' checks, ' + (data.totals.input_tokens + data.totals.output_tokens).toLocaleString('en') + ' tokens used'
+    const s = data.stats
+    const tokens = s.input_tokens + s.output_tokens
+    const cached = tokens ? Math.round((s.cached_tokens / tokens) * 100) : 0
+    stats.innerHTML = [
+      [s.products, 'products'],
+      [s.shops, 'shops'],
+      [s.checks, 'checks'],
+      [s.price_changes, 'price changes'],
+      [s.in_stock + ' <small>/ ' + s.out_of_stock + ' out</small>', 'in stock'],
+      [tokens.toLocaleString('en') + ' <small>' + cached + '% cached</small>', 'tokens'],
+      [s.last_check ? s.last_check.slice(11, 16) + ' <small>' + s.last_check.slice(0, 10) + '</small>' : '-', 'last check'],
+    ].map(([v, l]) => '<div class="stat"><b>' + v + '</b><span>' + l + '</span></div>').join('')
     if (!data.products.length) { list.innerHTML = '<div class="empty">Nothing watched yet. Paste a product URL above.</div>'; return }
     const cards = await Promise.all(data.products.map(async (p) => {
       const hist = (await (await fetch('/api/products/' + p.id)).json()).history
@@ -81,7 +98,7 @@ export const DASHBOARD_HTML = `<!doctype html>
         delta = '<span class="' + (diff > 0 ? 'up' : 'down') + '">' + (diff > 0 ? '+' : '') + money(diff, last.currency) + '</span> since previous check'
       }
       return '<div class="card" data-id="' + p.id + '">'
-        + '<div><h2>' + escapeHtml(p.name || 'Unnamed product') + '</h2><a href="' + escapeAttr(p.url) + '" target="_blank" rel="noopener">' + escapeHtml(p.url) + '</a></div>'
+        + '<div><h2><a class="name" href="/product/' + p.id + '">' + escapeHtml(p.name || 'Unnamed product') + '</a></h2><a href="' + escapeAttr(p.url) + '" target="_blank" rel="noopener">' + escapeHtml(p.url) + '</a></div>'
         + '<div><div class="price">' + (last ? money(last.price, last.currency) : 'not checked') + '</div><div class="meta">' + (last ? stock(last.in_stock) + ' · ' + Math.round(last.confidence * 100) + '% · ' + last.checked_at.slice(0, 16).replace('T', ' ') : '') + (delta ? '<br>' + delta : '') + '</div></div>'
         + '<div class="row">' + sparkline(hist) + '<span><button class="ghost" data-check="' + p.id + '">Check now</button> <button class="ghost" data-remove="' + p.id + '">Remove</button></span></div>'
         + '</div>'

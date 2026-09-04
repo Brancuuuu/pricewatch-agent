@@ -9,10 +9,22 @@
     "watch": "tsx src/cli.ts watch",
     "typecheck": "tsc --noEmit",
     "evals": "tsx evals/run.ts",
-    "evals:capture": "tsx evals/capture.ts"
+    "evals:capture": "tsx evals/capture.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/cli.js serve",
+    "prepack": "npm run build"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "price-tracker",
+    "web-scraping",
+    "playwright",
+    "anthropic",
+    "claude",
+    "structured-outputs",
+    "sqlite",
+    "discord"
+  ],
+  "author": "Rafał Branc (https://ravdev.pl)",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -34,5 +46,19 @@
   },
   "engines": {
     "node": ">=22"
-  }
+  },
+  "bin": {
+    "pricewatch": "./bin/pricewatch.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Brancuuuu/pricewatch-agent.git"
+  },
+  "homepage": "https://github.com/Brancuuuu/pricewatch-agent#readme",
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ]
 }

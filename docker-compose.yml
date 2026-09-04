@@ -1,5 +1,6 @@
 services:
   dashboard:
+    image: ghcr.io/brancuuuu/pricewatch-agent:latest
     build: .
     env_file: .env
     environment:
@@ -8,14 +9,15 @@ services:
       - "8790:8790"
     volumes:
       - ./data:/app/data
-    command: ["npx", "tsx", "src/cli.ts", "serve"]
+    command: ["node", "dist/cli.js", "serve"]
 
   watcher:
+    image: ghcr.io/brancuuuu/pricewatch-agent:latest
     build: .
     env_file: .env
     environment:
       PRICEWATCH_DB: /app/data/pricewatch.db
     volumes:
       - ./data:/app/data
-    command: ["npx", "tsx", "src/cli.ts", "watch"]
+    command: ["node", "dist/cli.js", "watch"]
     restart: unless-stopped

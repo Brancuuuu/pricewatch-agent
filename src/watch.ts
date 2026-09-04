@@ -32,6 +32,7 @@ export async function checkProduct(store: Store, product: Product): Promise<Chec
     model: extraction.model,
     input_tokens: extraction.inputTokens,
     output_tokens: extraction.outputTokens,
+    cached_tokens: extraction.cachedTokens,
   })
   if (!product.name && extraction.info.name) {
     store.setProductName(product.id, extraction.info.name)

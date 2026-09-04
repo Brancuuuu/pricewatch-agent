@@ -21,6 +21,7 @@ export interface ExtractionResult {
   model: string
   inputTokens: number
   outputTokens: number
+  cachedTokens: number
 }
 
 export const SYSTEM_PROMPT = `You extract offer data from the text of a single online shop page.
@@ -65,7 +66,7 @@ export async function extractProduct(page: ExtractInput, model = config.model): 
     model,
     max_tokens: 500,
     temperature: 0,
-    system: SYSTEM_PROMPT,
+    system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
     messages: [{ role: 'user', content: input }],
     output_config: { format: zodOutputFormat(ProductInfoSchema) },
   })
@@ -75,7 +76,8 @@ export async function extractProduct(page: ExtractInput, model = config.model): 
   return {
     info: normalize(message.parsed_output),
     model,
-    inputTokens: message.usage.input_tokens,
+    inputTokens: message.usage.input_tokens + (message.usage.cache_read_input_tokens ?? 0) + (message.usage.cache_creation_input_tokens ?? 0),
     outputTokens: message.usage.output_tokens,
+    cachedTokens: message.usage.cache_read_input_tokens ?? 0,
   }
 }

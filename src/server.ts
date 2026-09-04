@@ -3,15 +3,17 @@ import { serve } from '@hono/node-server'
 import type { Store } from './db.js'
 import { checkProduct } from './watch.js'
 import { DASHBOARD_HTML } from './dashboard.js'
+import { PRODUCT_HTML } from './product-page.js'
 
 export function createApp(store: Store): Hono {
   const app = new Hono()
 
   app.get('/', (c) => c.html(DASHBOARD_HTML))
+  app.get('/product/:id', (c) => c.html(PRODUCT_HTML))
 
   app.get('/api/products', (c) => {
     const products = store.listProducts().map((product) => ({ ...product, last: store.lastSnapshot(product.id) ?? null }))
-    return c.json({ products, totals: store.totals() })
+    return c.json({ products, stats: store.stats() })
   })
 
   app.post('/api/products', async (c) => {

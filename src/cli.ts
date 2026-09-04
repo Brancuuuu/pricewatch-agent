@@ -22,7 +22,7 @@ function printResult(result: CheckResult): void {
     formatPrice(current.price, current.currency),
     stockLabel(current.in_stock),
     `conf ${Math.round(current.confidence * 100)}%`,
-    `${current.input_tokens}+${current.output_tokens} tok`,
+    `${current.input_tokens}+${current.output_tokens} tok` + (current.cached_tokens ? ` (${current.cached_tokens} cached)` : ''),
   ].join('  |  ')
   console.log(line)
   if (changed && previous) console.log(`   was ${formatPrice(previous.price, previous.currency)} (${stockLabel(previous.in_stock)})`)
