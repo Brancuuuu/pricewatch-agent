@@ -28,18 +28,18 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.123.0",
+    "@anthropic-ai/sdk": "^0.124.0",
     "@hono/node-server": "^2.1.1",
     "better-sqlite3": "^13.0.3",
     "commander": "^15.0.0",
     "dotenv": "^17.4.2",
-    "hono": "^4.13.5",
-    "playwright": "^1.62.1",
+    "hono": "^4.13.7",
+    "playwright": "^1.63.0",
     "zod": "^4.5.4"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^9.6.0",
-    "@types/node": "^26.4.1",
+    "@types/node": "^26.5.0",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2",
     "vitest": "^5.0.0"
